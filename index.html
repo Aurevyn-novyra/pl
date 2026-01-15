@@ -1,0 +1,101 @@
+<!-- index.html
+  Single-file HTML entry. Links to style.css and script.js (below).
+  Accessible, semantic structure and progressive enhancement.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Premium PDF Flipbook</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- App styles -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- PDF.js (browser build) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.7.570/pdf.min.js"></script>
+
+  <!-- Page flip library (StPageFlip / page-flip) -->
+  <script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.min.js"></script>
+
+  <!-- App script (deferred) -->
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <!-- Background gradient + soft blur -->
+  <div class="bg-layer" aria-hidden="true"></div>
+
+  <!-- Landing / Upload Screen -->
+  <main id="landing" class="center-screen" role="main" aria-labelledby="upload-heading">
+    <div class="glass card landing-card" id="landing-card">
+      <h1 id="upload-heading" class="title">Upload PDF</h1>
+
+      <p class="subtitle">Open any PDF locally — it never leaves your browser.</p>
+
+      <label class="upload-btn" for="file-input" aria-describedby="upload-desc">
+        <input id="file-input" type="file" accept="application/pdf" aria-label="Upload PDF file" />
+        <span class="btn-inner">Choose PDF</span>
+      </label>
+
+      <p id="upload-desc" class="muted">Supports desktop & mobile. Uses secure client-side rendering.</p>
+
+      <div class="small-hint">
+        <button id="demo-open" class="ghost">Open sample (demo)</button>
+      </div>
+
+      <div class="credits muted small">Made with • PDF.js • StPageFlip</div>
+    </div>
+  </main>
+
+  <!-- Viewer overlay (hidden until PDF loaded) -->
+  <div id="viewer" class="viewer hidden" role="region" aria-label="Flipbook viewer">
+    <!-- Top toolbar (glassy) -->
+    <div class="toolbar glass" role="toolbar" aria-label="Viewer controls">
+      <div class="toolbar-left">
+        <button id="btn-prev" class="tool" title="Previous page" aria-label="Previous page">◀</button>
+        <button id="btn-next" class="tool" title="Next page" aria-label="Next page">▶</button>
+      </div>
+
+      <div class="toolbar-center">
+        <div class="page-indicator" aria-live="polite">
+          <span id="page-current">1</span> / <span id="page-total">0</span>
+        </div>
+      </div>
+
+      <div class="toolbar-right">
+        <button id="btn-zoom-out" class="tool" title="Zoom out" aria-label="Zoom out">−</button>
+        <button id="btn-zoom-in" class="tool" title="Zoom in" aria-label="Zoom in">＋</button>
+        <button id="btn-fullscreen" class="tool" title="Toggle fullscreen" aria-label="Toggle fullscreen">⤢</button>
+        <button id="btn-close" class="tool" title="Close document" aria-label="Close document">✕</button>
+      </div>
+    </div>
+
+    <!-- center area for flipbook -->
+    <div class="viewer-body">
+      <div id="loader" class="loader-card glass">
+        <div class="spinner" aria-hidden="true"></div>
+        <div id="loader-text" class="loader-text">Preparing PDF…</div>
+        <div id="loader-progress" class="progress-bar" aria-hidden="true"><div style="width:0%"></div></div>
+      </div>
+
+      <div id="flipbook-wrap" class="flipbook-wrap hidden" tabindex="0" aria-label="Flipbook">
+        <!-- dynamically inserted pages will go into #flipbook -->
+        <div id="flipbook" class="flip-book" role="document" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <!-- bottom hint / small controls -->
+    <div class="viewer-footer glass">
+      <div class="muted">Drag corners to flip • Use touch / swipe on mobile • Keyboard ← →</div>
+    </div>
+  </div>
+
+  <!-- Accessible hidden fallbacks -->
+  <noscript>
+    <div class="noscript-warning">JavaScript is required for this app to work. Please enable JavaScript.</div>
+  </noscript>
+</body>
+</html>
